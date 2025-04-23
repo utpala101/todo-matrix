@@ -144,7 +144,11 @@ function initializeTaskFunctions() {
     });
     
     // AI分析按钮
-    document.getElementById('ai-analyze-btn').addEventListener('click', showTaskQuestionnaire);
+    document.getElementById('ai-analyze-btn').addEventListener('click', () => {
+        const taskInput = document.getElementById('task-input');
+        const taskText = taskInput.value.trim();
+        showTaskQuestionnaire(taskText);
+    });
     
     // 提交问卷按钮
     document.getElementById('submit-questionnaire').addEventListener('click', submitQuestionnaire);
@@ -250,19 +254,24 @@ function addNewTask() {
         // 清空输入框
         taskInput.value = '';
         
-        // 自动弹出AI分析
-        showTaskQuestionnaire();
+        // 自动弹出AI分析，并传递任务文本
+        showTaskQuestionnaire(taskText);
     }
 }
 
 // 显示任务问卷
-function showTaskQuestionnaire() {
-    const taskInput = document.getElementById('task-input');
-    const taskText = taskInput.value.trim();
+function showTaskQuestionnaire(passedTaskText) {
+    // 如果传递了任务文本，则使用它；否则从输入框获取
+    let taskText = passedTaskText || '';
     
     if (!taskText) {
-        alert('请先输入任务内容');
-        return;
+        const taskInput = document.getElementById('task-input');
+        taskText = taskInput.value.trim();
+        
+        if (!taskText) {
+            alert('请先输入任务内容');
+            return;
+        }
     }
     
     // 保存当前任务
@@ -284,8 +293,10 @@ function showTaskQuestionnaire() {
     document.getElementById('task-questionnaire').style.display = 'block';
     document.getElementById('ai-analysis-result').style.display = 'none';
     
-    // 清空输入框
-    taskInput.value = '';
+    // 清空输入框（如果是从输入框获取的任务文本）
+    if (!passedTaskText) {
+        document.getElementById('task-input').value = '';
+    }
 }
 
 // 重置问卷表单
