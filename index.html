@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作管理系统</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>工作管理系统</h1>
+            <button id="api-settings-btn" class="settings-btn" title="API设置">
+                <i class="fas fa-cog"></i>
+            </button>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="day">本日工作</button>
+            <button class="tab-btn" data-tab="week">本周工作</button>
+            <button class="tab-btn" data-tab="month">本月工作</button>
+        </div>
+        
+        <div class="add-task-section">
+            <input type="text" id="task-input" placeholder="输入新工作...">
+            <button id="add-task-btn">添加工作</button>
+            <button id="ai-analyze-btn">AI判定</button>
+        </div>
+        
+        <div class="tab-content active" id="day-content">
+            <div class="matrix-container">
+                <div class="matrix-quadrant" id="q1-day" data-quadrant="important-urgent" data-timeframe="day">
+                    <h3>重要且紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="important-urgent" data-timeframe="day">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="important-urgent-day"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q2-day" data-quadrant="important-not-urgent" data-timeframe="day">
+                    <h3>重要不紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="important-not-urgent" data-timeframe="day">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="important-not-urgent-day"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q3-day" data-quadrant="not-important-urgent" data-timeframe="day">
+                    <h3>紧急不重要</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="not-important-urgent" data-timeframe="day">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="not-important-urgent-day"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q4-day" data-quadrant="not-important-not-urgent" data-timeframe="day">
+                    <h3>不重要不紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="not-important-not-urgent" data-timeframe="day">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="not-important-not-urgent-day"></ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="week-content">
+            <div class="matrix-container">
+                <div class="matrix-quadrant" id="q1-week" data-quadrant="important-urgent" data-timeframe="week">
+                    <h3>重要且紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="important-urgent" data-timeframe="week">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="important-urgent-week"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q2-week" data-quadrant="important-not-urgent" data-timeframe="week">
+                    <h3>重要不紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="important-not-urgent" data-timeframe="week">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="important-not-urgent-week"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q3-week" data-quadrant="not-important-urgent" data-timeframe="week">
+                    <h3>紧急不重要</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="not-important-urgent" data-timeframe="week">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="not-important-urgent-week"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q4-week" data-quadrant="not-important-not-urgent" data-timeframe="week">
+                    <h3>不重要不紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="not-important-not-urgent" data-timeframe="week">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="not-important-not-urgent-week"></ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="month-content">
+            <div class="matrix-container">
+                <div class="matrix-quadrant" id="q1-month" data-quadrant="important-urgent" data-timeframe="month">
+                    <h3>重要且紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="important-urgent" data-timeframe="month">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="important-urgent-month"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q2-month" data-quadrant="important-not-urgent" data-timeframe="month">
+                    <h3>重要不紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="important-not-urgent" data-timeframe="month">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="important-not-urgent-month"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q3-month" data-quadrant="not-important-urgent" data-timeframe="month">
+                    <h3>紧急不重要</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="not-important-urgent" data-timeframe="month">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="not-important-urgent-month"></ul>
+                </div>
+                <div class="matrix-quadrant" id="q4-month" data-quadrant="not-important-not-urgent" data-timeframe="month">
+                    <h3>不重要不紧急</h3>
+                    <div class="quadrant-add-form">
+                        <input type="text" class="quadrant-input" placeholder="直接添加到此象限...">
+                        <button class="quadrant-add-btn" data-quadrant="not-important-not-urgent" data-timeframe="month">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <ul class="task-list" id="not-important-not-urgent-month"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ai-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>任务信息问卷</h2>
+            <div id="task-questionnaire">
+                <div class="task-details">
+                    <h3>任务名称: <span id="task-name"></span></h3>
+                    
+                    <div class="question-group">
+                        <label>任务类型:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="task-type" value="work" checked> 工作</label>
+                            <label><input type="radio" name="task-type" value="self-improvement"> 自我提升</label>
+                            <label><input type="radio" name="task-type" value="personal"> 个人事务</label>
+                            <label><input type="radio" name="task-type" value="other"> 其他</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question-group">
+                        <label>对自己的价值:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="self-value" value="high" checked> 高价值</label>
+                            <label><input type="radio" name="self-value" value="medium"> 中等价值</label>
+                            <label><input type="radio" name="self-value" value="low"> 低价值</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question-group">
+                        <label>时间紧迫度:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="urgency" value="high"> 非常紧急</label>
+                            <label><input type="radio" name="urgency" value="medium" checked> 中等紧急</label>
+                            <label><input type="radio" name="urgency" value="low"> 不紧急</label>
+                        </div>
+                    </div>
+                    
+                    <div class="question-group">
+                        <label>截止日期:</label>
+                        <input type="date" id="deadline" name="deadline">
+                    </div>
+                    
+                    <div class="question-group">
+                        <label>额外备注:</label>
+                        <textarea id="additional-notes" placeholder="输入任何有助于判断任务优先级的额外信息..."></textarea>
+                    </div>
+                    
+                    <button id="submit-questionnaire">提交进行AI分析</button>
+                </div>
+            </div>
+            <div id="ai-analysis-result" style="display: none;">
+                <h3>分析结果</h3>
+                <div id="ai-result-content"></div>
+                <button id="ai-apply-btn">应用AI判定结果</button>
+                <button id="back-to-questionnaire">返回修改</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="api-settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>API设置</h2>
+            <div class="api-settings-form">
+                <p>请输入API相关信息以启用AI判定功能。如果不提供API信息，系统将使用本地模拟响应。</p>
+                <div class="form-group">
+                    <label for="api-url">API地址:</label>
+                    <input type="text" id="api-url" placeholder="输入API地址，例如 https://api.example.com/chat/completions">
+                </div>
+                <div class="form-group">
+                    <label for="api-key">API密钥:</label>
+                    <input type="password" id="api-key" placeholder="输入您的API密钥">
+                    <button id="toggle-password" type="button">显示</button>
+                </div>
+                <div class="form-group">
+                    <label for="api-model">模型名称:</label>
+                    <input type="text" id="api-model" placeholder="输入模型名称，例如 gpt-4">
+                </div>
+                <button id="save-api-key">保存设置</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html> 
