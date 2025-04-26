@@ -133,21 +133,20 @@ function initializeAPISettings() {
 
 // 初始化任务相关功能
 function initializeTaskFunctions() {
-    // 添加任务按钮
-    document.getElementById('add-task-btn').addEventListener('click', addNewTask);
-    
-    // 监听回车键添加任务
-    document.getElementById('task-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            addNewTask();
-        }
-    });
-    
     // AI分析按钮
     document.getElementById('ai-analyze-btn').addEventListener('click', () => {
         const taskInput = document.getElementById('task-input');
         const taskText = taskInput.value.trim();
         showTaskQuestionnaire(taskText);
+    });
+    
+    // 监听回车键触发AI判定
+    document.getElementById('task-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const taskInput = document.getElementById('task-input');
+            const taskText = taskInput.value.trim();
+            showTaskQuestionnaire(taskText);
+        }
     });
     
     // 提交问卷按钮
@@ -237,28 +236,6 @@ function addTaskToQuadrant(taskText, quadrant, timeFrame) {
     saveTasksToLocalStorage();
 }
 
-// 添加新任务
-function addNewTask() {
-    const taskInput = document.getElementById('task-input');
-    const taskText = taskInput.value.trim();
-    
-    if (taskText) {
-        // 临时添加到待定任务列表
-        pendingTasks.push({
-            id: Date.now().toString(),
-            text: taskText,
-            completed: false,
-            timeFrame: currentTab
-        });
-        
-        // 清空输入框
-        taskInput.value = '';
-        
-        // 自动弹出AI分析，并传递任务文本
-        showTaskQuestionnaire(taskText);
-    }
-}
-
 // 显示任务问卷
 function showTaskQuestionnaire(passedTaskText) {
     // 如果传递了任务文本，则使用它；否则从输入框获取
@@ -282,8 +259,14 @@ function showTaskQuestionnaire(passedTaskText) {
         timeFrame: currentTab
     };
     
+    // 临时添加到待定任务列表
+    pendingTasks = [currentTask];
+    
     // 显示任务名称
     document.getElementById('task-name').textContent = taskText;
+    
+    // 清空输入框
+    document.getElementById('task-input').value = '';
     
     // 重置问卷表单
     resetQuestionnaireForm();
@@ -292,11 +275,6 @@ function showTaskQuestionnaire(passedTaskText) {
     document.getElementById('ai-modal').style.display = 'block';
     document.getElementById('task-questionnaire').style.display = 'block';
     document.getElementById('ai-analysis-result').style.display = 'none';
-    
-    // 清空输入框（如果是从输入框获取的任务文本）
-    if (!passedTaskText) {
-        document.getElementById('task-input').value = '';
-    }
 }
 
 // 重置问卷表单
